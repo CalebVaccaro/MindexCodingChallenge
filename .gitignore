@@ -1,0 +1,56 @@
+# Caleb's Personal Git Ignore for .NET Projects
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.lock.json
+project.assets.json
+project.lock.json
+*.csproj.user
+*.dll
+*.exe
+*.pdb
+*.cache
+*.ico
+*.log
+*.svclog
+*.user
+*.userosscache
+*.suo
+*.tmp
+*.userprefs
+*.pidb
+*.workspace
+*.dll.config
+*.exe.config
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+.vs/
+*.opendb
+*.dbmdl
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# ReSharper
+_ReSharper.*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# User-specific files
+*.rsuser
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]ogs/
