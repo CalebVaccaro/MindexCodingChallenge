@@ -1,5 +1,6 @@
 ﻿using CodeChallenge.Contracts;
 using CodeChallenge.Mapping;
+using CodeChallenge.Repositories;
 using CodeChallenge.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,15 +12,12 @@ namespace CodeChallenge.Controllers;
 public class CompensationController : ControllerBase
 {
     private readonly ILogger _logger;
-    private readonly ICompensationService _compensationService;
-    private readonly IEmployeeService _employeeService;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CompensationController(ILogger<EmployeeController> logger, ICompensationService compensationService,
-        IEmployeeService employeeService)
+    public CompensationController(ILogger<EmployeeController> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
-        _compensationService = compensationService;
-        _employeeService = employeeService;
+        _unitOfWork = unitOfWork;
     }
 
     [HttpGet("{id}", Name = "getCompensationById")]
@@ -27,17 +25,12 @@ public class CompensationController : ControllerBase
     {
         _logger.LogDebug($"Received compensation get request for '{id}'");
 
-        var compensation = _compensationService.GetById(id);
+        var compensation = _unitOfWork.GetCompensationByIdAsync(id);
 
         if (compensation == null)
             return NotFound();
 
-        var employee = _employeeService.GetById(id);
-
-        if (employee == null)
-            return NotFound();
-
-        return Ok(compensation.ToCompensationDTO(employee));
+        return Ok(compensation);
     }
 
     [HttpPost(Name = "createCompensation")]
@@ -47,13 +40,8 @@ public class CompensationController : ControllerBase
 
         _logger.LogDebug($"Received compensation create request for '{compensation.EmployeeId}'");
 
-        _compensationService.Create(compensation);
+        var newCompensationDto = _unitOfWork.CreateCompensationAsync(compensation);
 
-        var employee = _employeeService.GetById(compensation.EmployeeId);
-
-        if (employee == null)
-            return NotFound();
-
-        return CreatedAtRoute("getCompensationById", new { id = compensation.EmployeeId }, compensation.ToCompensationDTO(employee));
+        return CreatedAtRoute("getCompensationById", new { id = compensation.EmployeeId }, newCompensationDto);
     }
 }
