@@ -31,7 +31,6 @@ namespace CodeChallenge.Controllers
 
             _employeeService.Create(employee);
 
-            // convert to EmployeeDTO object
             return CreatedAtRoute("getEmployeeById", new { id = employee.EmployeeId }, employee);
         }
 

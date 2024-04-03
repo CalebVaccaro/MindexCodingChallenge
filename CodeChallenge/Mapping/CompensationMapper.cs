@@ -28,7 +28,7 @@ public static class CompensationMapper
     {
         return new Compensation
         {
-            EmployeeId = compensationDTO.Employee.EmployeeId, // Assuming EmployeeDTO is properly populated
+            EmployeeId = compensationDTO.Employee.EmployeeId,
             Salary = compensationDTO.Salary,
             EffectiveDate = compensationDTO.EffectiveDate
         };
