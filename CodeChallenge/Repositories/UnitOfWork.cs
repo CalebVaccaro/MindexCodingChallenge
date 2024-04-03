@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using CodeChallenge.Contracts;
 using CodeChallenge.Data;
@@ -7,7 +8,8 @@ using CodeChallenge.Services;
 
 namespace CodeChallenge.Repositories;
 
-public class UnitOfWork : IUnitOfWork
+// Unit of Work pattern to handle multiple repositories
+public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly EmployeeContext _employeeContext;
     private readonly CompensationContext _compensationContext;
@@ -57,5 +59,11 @@ public class UnitOfWork : IUnitOfWork
     {
         await _employeeContext.SaveChangesAsync();
         await _compensationContext.SaveChangesAsync();
+    }
+
+    public void Dispose()
+    {
+        _employeeContext?.Dispose();
+        _compensationContext?.Dispose();
     }
 }
