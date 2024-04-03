@@ -70,7 +70,7 @@ namespace CodeChallenge.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}/reportingStructure", Name = "getReportingStructure")]
-        public IActionResult GetReportingStructure(String id)
+        public IActionResult GetReportingStructure(string id)
         {
             _logger.LogDebug($"Received reporting structure get request for '{id}'");
 

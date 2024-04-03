@@ -22,6 +22,7 @@ public class CompensationService : ICompensationService
             return _compensationRepository.GetById(id);
         }
 
+        _logger.LogError($"Compensation with id {id} not found.");
         return null;
     }
 
@@ -29,6 +30,13 @@ public class CompensationService : ICompensationService
     {
         if (compensation != null)
         {
+            var existingCompensation = _compensationRepository.GetById(compensation.EmployeeId);
+            if (existingCompensation != null)
+            {
+                _logger.LogError($"Compensation for employee with id {compensation.EmployeeId} already exists.");
+                return existingCompensation;
+            }
+            
             _compensationRepository.Add(compensation);
             _compensationRepository.SaveAsync().Wait();
         }

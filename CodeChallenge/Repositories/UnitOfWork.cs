@@ -14,7 +14,10 @@ public class UnitOfWork : IUnitOfWork
     private readonly IEmployeeService _employeeService;
     private readonly ICompensationService _compensationService;
     
-    public UnitOfWork(EmployeeContext employeeContext, CompensationContext compensationContext, IEmployeeService employeeService, ICompensationService compensationService)
+    public UnitOfWork(EmployeeContext employeeContext,
+        CompensationContext compensationContext,
+        IEmployeeService employeeService,
+        ICompensationService compensationService)
     {
         _employeeContext = employeeContext;
         _compensationContext = compensationContext;

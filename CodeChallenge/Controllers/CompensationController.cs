@@ -28,7 +28,7 @@ public class CompensationController : ControllerBase
         var compensation = _unitOfWork.GetCompensationByIdAsync(id);
 
         if (compensation == null)
-            return NotFound();
+            return BadRequest();
 
         return Ok(compensation);
     }
@@ -41,6 +41,9 @@ public class CompensationController : ControllerBase
         _logger.LogDebug($"Received compensation create request for '{compensation.EmployeeId}'");
 
         var newCompensationDto = _unitOfWork.CreateCompensationAsync(compensation);
+        
+        if (newCompensationDto == null)
+            return BadRequest();
 
         return CreatedAtRoute("getCompensationById", new { id = compensation.EmployeeId }, newCompensationDto);
     }

@@ -49,5 +49,58 @@
     "lastName": "Harrison",
     "position": "Developer III",
     "department": "Engineering"
+  },
+  {
+    "employeeId": "41718285-45fe-425c-a01a-625bc536a098",
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "position": "CTO",
+    "department": "Technology",
+    "directReports": [
+      {"employeeId": "f7a7f3cc-2cdd-4e22-b0f2-40c4a2ae8988"},
+      {"employeeId": "addac017-e6bf-457c-b259-7ea56159bc19"}
+    ]
+  },
+  {
+    "employeeId": "f7a7f3cc-2cdd-4e22-b0f2-40c4a2ae8988",
+    "firstName": "Bob",
+    "lastName": "Jones",
+    "position": "Senior Engineer",
+    "department": "Software",
+    "directReports": [
+      {"employeeId": "bf83a58b-f7b9-471e-afea-36a991454bca"}
+    ]
+  },
+  {
+    "employeeId": "addac017-e6bf-457c-b259-7ea56159bc19",
+    "firstName": "Charlie",
+    "lastName": "Brown",
+    "position": "Senior Engineer",
+    "department": "Infrastructure",
+    "directReports": [
+      {"employeeId": "0f44450b-253a-4c6f-bfe5-2def7033da65"},
+      {"employeeId": "a62e66ef-41d7-43fa-a818-b592d2e61973"}
+    ]
+  },
+  {
+    "employeeId": "bf83a58b-f7b9-471e-afea-36a991454bca",
+    "firstName": "Diana",
+    "lastName": "Ross",
+    "position": "Engineer",
+    "department": "Software"
+  },
+  {
+    "employeeId": "0f44450b-253a-4c6f-bfe5-2def7033da65",
+    "firstName": "Evan",
+    "lastName": "Williams",
+    "position": "Engineer",
+    "department": "Infrastructure"
+  },
+  {
+    "employeeId": "a62e66ef-41d7-43fa-a818-b592d2e61973",
+    "firstName": "Fiona",
+    "lastName": "Apple",
+    "position": "Engineer",
+    "department": "Infrastructure"
   }
 ]

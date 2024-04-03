@@ -57,7 +57,7 @@ namespace CodeCodeChallenge.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-            var newEmployee = response.DeserializeContent<EmployeeDTO>();
+            var newEmployee = response.DeserializeContent<Employee>();
             Assert.IsNotNull(newEmployee.EmployeeId);
             Assert.AreEqual(employee.FirstName, newEmployee.FirstName);
             Assert.AreEqual(employee.LastName, newEmployee.LastName);
@@ -134,15 +134,17 @@ namespace CodeCodeChallenge.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
-
-        // I prefer Arrange, Act, Assert
+        
+        // I am accustom to Arrange, Act, Assert
         // Verify the number of reports for an employee
+        // If this is below UpdateEmployee_Returns_Ok, race conditions occur and the test fails with John Lennon
+        // I added more employees to the test data to verify the number of reports
         [TestMethod]
         public void GetReportingStructure_Returns_Ok()
         {
             // Arrange
-            var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
-            var expectedNumberOfReports = 4;
+            var employeeId = "41718285-45fe-425c-a01a-625bc536a098";
+            var expectedNumberOfReports = 5;
 
             // Act
             var getRequestTask = _httpClient.GetAsync($"api/employee/{employeeId}/reportingStructure");

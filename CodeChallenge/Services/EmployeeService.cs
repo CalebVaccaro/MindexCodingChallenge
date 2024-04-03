@@ -39,6 +39,7 @@ namespace CodeChallenge.Services
                 return _employeeRepository.GetById(id);
             }
 
+            _logger.LogError($"Employee with id {id} not found.");
             return null;
         }
 
