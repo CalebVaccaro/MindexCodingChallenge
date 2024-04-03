@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using CodeChallenge.Contracts;
 using CodeChallenge.Models;
 
 using CodeCodeChallenge.Tests.Integration.Extensions;
@@ -38,12 +39,13 @@ namespace CodeCodeChallenge.Tests.Integration
         public void CreateEmployee_Returns_Created()
         {
             // Arrange
-            var employee = new Employee()
+            var employee = new EmployeeDTO()
             {
                 Department = "Complaints",
                 FirstName = "Debbie",
                 LastName = "Downer",
                 Position = "Receiver",
+                DirectReports = new List<string>()
             };
 
             var requestContent = new JsonSerialization().ToJson(employee);
@@ -56,7 +58,7 @@ namespace CodeCodeChallenge.Tests.Integration
             // Assert
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-            var newEmployee = response.DeserializeContent<Employee>();
+            var newEmployee = response.DeserializeContent<EmployeeDTO>();
             Assert.IsNotNull(newEmployee.EmployeeId);
             Assert.AreEqual(employee.FirstName, newEmployee.FirstName);
             Assert.AreEqual(employee.LastName, newEmployee.LastName);
@@ -78,7 +80,7 @@ namespace CodeCodeChallenge.Tests.Integration
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var employee = response.DeserializeContent<Employee>();
+            var employee = response.DeserializeContent<EmployeeDTO>();
             Assert.AreEqual(expectedFirstName, employee.FirstName);
             Assert.AreEqual(expectedLastName, employee.LastName);
         }
@@ -87,14 +89,13 @@ namespace CodeCodeChallenge.Tests.Integration
         public void UpdateEmployee_Returns_Ok()
         {
             // Arrange
-            var employee = new Employee()
+            var employee = new EmployeeDTO()
             {
                 EmployeeId = "03aa1462-ffa9-4978-901b-7c001562cf6f",
                 Department = "Engineering",
                 FirstName = "Pete",
                 LastName = "Best",
                 Position = "Developer VI",
-                DirectReports = new List<Employee>()
             };
             var requestContent = new JsonSerialization().ToJson(employee);
 
@@ -105,7 +106,7 @@ namespace CodeCodeChallenge.Tests.Integration
             
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, putResponse.StatusCode);
-            var newEmployee = putResponse.DeserializeContent<Employee>();
+            var newEmployee = putResponse.DeserializeContent<EmployeeDTO>();
 
             Assert.AreEqual(employee.FirstName, newEmployee.FirstName);
             Assert.AreEqual(employee.LastName, newEmployee.LastName);
@@ -115,7 +116,7 @@ namespace CodeCodeChallenge.Tests.Integration
         public void UpdateEmployee_Returns_NotFound()
         {
             // Arrange
-            var employee = new Employee()
+            var employee = new EmployeeDTO()
             {
                 EmployeeId = "Invalid_Id",
                 Department = "Music",

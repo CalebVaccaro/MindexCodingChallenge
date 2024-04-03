@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CodeChallenge.Contracts;
 using CodeChallenge.Models;
 
@@ -17,7 +18,7 @@ public static class EmployeeMapper
             Department = employeeDTO.Department,
             // foreach string id in employeeDTO.DirectReports
             // create a new employee with that id (replicating EmployeeSeedData.json format)
-            DirectReports = employeeDTO.DirectReports.Select(id => new Employee { EmployeeId = id }).ToList()
+            DirectReports = employeeDTO.DirectReports?.Select(id => new Employee { EmployeeId = id }).ToList()
         };
     }
 
@@ -30,7 +31,7 @@ public static class EmployeeMapper
             LastName = employee.LastName,
             Position = employee.Position,
             Department = employee.Department,
-            DirectReports = employee.DirectReports.Select(e => e.EmployeeId).ToList()
+            DirectReports = employee.DirectReports?.Select(e => e.EmployeeId).ToList()
         };
     }
 }

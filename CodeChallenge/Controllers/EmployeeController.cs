@@ -25,13 +25,19 @@ namespace CodeChallenge.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateEmployee([FromBody]Employee employee)
+        public IActionResult CreateEmployee([FromBody]EmployeeDTO employeeDto)
         {
+            // Convert DTO to Employee
+            var employee = employeeDto.ToEmployee();
+            
             _logger.LogDebug($"Received employee create request for '{employee.FirstName} {employee.LastName}'");
 
             _employeeService.Create(employee);
-
-            return CreatedAtRoute("getEmployeeById", new { id = employee.EmployeeId }, employee);
+            
+            // Convert to Dto
+            var employeeResponse = employee.ToEmployeeDTO();
+            
+            return CreatedAtRoute("getEmployeeById", new { id = employeeResponse.EmployeeId }, employeeResponse);
         }
 
         [HttpGet("{id}", Name = "getEmployeeById")]
@@ -44,12 +50,18 @@ namespace CodeChallenge.Controllers
             if (employee == null)
                 return NotFound();
 
-            return Ok(employee);
+            // Convert to Dto
+            var employeeDto = employee.ToEmployeeDTO();
+            
+            return Ok(employeeDto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult ReplaceEmployee(String id, [FromBody]Employee newEmployee)
+        public IActionResult ReplaceEmployee(String id, [FromBody]EmployeeDTO employeeDto)
         {
+            // Convert DTO to Employee
+            var newEmployee = employeeDto.ToEmployee();
+            
             _logger.LogDebug($"Recieved employee update request for '{id}'");
 
             var existingEmployee = _employeeService.GetById(id);
@@ -57,8 +69,11 @@ namespace CodeChallenge.Controllers
                 return NotFound();
 
             _employeeService.Replace(existingEmployee, newEmployee);
+            
+            // Convert to Dto
+            var employeeResponse = newEmployee.ToEmployeeDTO();
 
-            return Ok(newEmployee);
+            return Ok(employeeResponse);
         }
 
         /// <summary>
